@@ -50,7 +50,7 @@ app.get('/schema', (req, res) => {
             nim: "2411522037"
         },
         resource: {
-            name: "items",
+            name: "thrift",
             label: "Data Barang Bekas",
             description: "Aplikasi untuk mengelola data penjualan barang bekas (preloved)"
         },
@@ -63,17 +63,17 @@ app.get('/schema', (req, res) => {
             { name: "deskripsi", label: "Deskripsi", type: "textarea", required: false, showInTable: true }
         ],
         endpoints: {
-            list: "/items",
-            detail: "/items/{id}",
-            create: "/items",
-            update: "/items/{id}",
-            delete: "/items/{id}"
+            list: "/thrift",
+            detail: "/thrift/{id}",
+            create: "/thrift",
+            update: "/thrift/{id}",
+            delete: "/thrift/{id}"
         }
     });
 });
 
-// GET /items
-app.get('/items', async (req, res) => {
+// GET /thrift
+app.get('/thrift', async (req, res) => {
     try {
         const page = parseInt(req.query.page) || 1;
         const limit = parseInt(req.query.limit) || 10;
@@ -128,8 +128,8 @@ app.get('/items', async (req, res) => {
     }
 });
 
-// GET /items/:id
-app.get('/items/:id', async (req, res) => {
+// GET /thrift/:id
+app.get('/thrift/:id', async (req, res) => {
     try {
         const [rows] = await db.query('SELECT * FROM barang_bekas WHERE id = ?', [req.params.id]);
         if (rows.length === 0) {
@@ -156,8 +156,8 @@ app.get('/items/:id', async (req, res) => {
     }
 });
 
-// POST /items
-app.post('/items', async (req, res) => {
+// POST /thrift
+app.post('/thrift', async (req, res) => {
     const { nama, merek, harga, stok, kondisi, deskripsi } = req.body;
     try {
         const [result] = await db.query(
@@ -183,8 +183,8 @@ app.post('/items', async (req, res) => {
     }
 });
 
-// PUT /items/:id
-app.put('/items/:id', async (req, res) => {
+// PUT /thrift/:id
+app.put('/thrift/:id', async (req, res) => {
     const { nama, merek, harga, stok, kondisi, deskripsi } = req.body;
     try {
         await db.query(
@@ -210,8 +210,8 @@ app.put('/items/:id', async (req, res) => {
     }
 });
 
-// DELETE /items/:id
-app.delete('/items/:id', async (req, res) => {
+// DELETE /thrift/:id
+app.delete('/thrift/:id', async (req, res) => {
     try {
         await db.query('DELETE FROM barang_bekas WHERE id = ?', [req.params.id]);
         return res.status(200).json({
